@@ -1,0 +1,7 @@
+{
+  "name": "FaceDetector",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
