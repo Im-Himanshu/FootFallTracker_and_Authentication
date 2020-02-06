@@ -10,29 +10,102 @@ export class TensorFLowJsComponent implements OnInit {
   
   @ViewChild('videoElement', {static:true}) videoElement: any;  
   video: any;
+  imageUpload :any;
   isPlaying = false;
 
   displayControls = true;
- 
+   image;
+   canvas;
+   container;
+   faceMatcher;
+   labeledFaceDescriptors;
+
   constructor(private renderer: Renderer2){
 
   }
 
+  ngAfterViewInit(){
+    this.video = document.getElementById('videoElement');
+    this.imageUpload =document.getElementById('imageUpload');
+    this.loadModel();
+
+  }
 
 
 
   async loadModel() {
     Promise.all([
-      faceapi.nets.tinyFaceDetector.loadFromUri('../../../assets/models'),
-      faceapi.nets.faceLandmark68Net.loadFromUri('../../../assets/models'),
       faceapi.nets.faceRecognitionNet.loadFromUri('../../../assets/models'),
-      faceapi.nets.faceExpressionNet.loadFromUri('/../../../assets/models')
+      faceapi.nets.faceLandmark68Net.loadFromUri('../../../assets/models'),
+      faceapi.nets.ssdMobilenetv1.loadFromUri('../../../assets/models')
     ]).then(data=>{
-      this.onPlayVideo();
+      this.start2();
     }
 
     )
   }
+
+  async imageChanged(){
+    if(!this.faceMatcher) {
+      this.faceMatcher = new faceapi.FaceMatcher(this.labeledFaceDescriptors, 0.6);
+      document.body.append('Loaded');
+    }
+    if (this.image) this.image.remove()
+    if (this.canvas) this.canvas.remove()
+    this.image = await faceapi.bufferToImage(this.imageUpload.files[0])
+    this.container.append(this.image)
+    this.canvas = faceapi.createCanvasFromMedia(this.image)
+    this.container.append(this.canvas)
+    const displaySize = { width: this.image.width, height: this.image.height }
+    faceapi.matchDimensions(this.canvas, displaySize)
+    const detections = await faceapi.detectAllFaces(this.image).withFaceLandmarks().withFaceDescriptors()
+    const resizedDetections = faceapi.resizeResults(detections, displaySize)
+    const results = resizedDetections.map(d => this.faceMatcher.findBestMatch(d.descriptor))
+    results.forEach((result, i) => {
+      const box = resizedDetections[i].detection.box
+      const drawBox = new faceapi.draw.DrawBox(box, { label: result.toString() })
+      drawBox.draw(this.canvas)
+    })
+  
+
+  }
+
+  async  start2() {
+    this.container = document.createElement('div')
+    this.container.style.position = 'relative'
+    document.body.append(this.container)
+    this.loadLabeledImages().then(labeledFaceDescriptors =>{
+      console.log("event Published");
+      this.faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6)
+      document.body.append('Loaded')
+ 
+    })
+
+
+  }
+  
+  loadLabeledImages() {
+    const labels = ['Black Widow', 'Captain America', 'Captain Marvel', 'Hawkeye', 'Jim Rhodes', 'Thor', 'Tony Stark']
+    return Promise.all(
+      labels.map(async label => {
+        const descriptions = []
+        for (let i = 1; i <= 2; i++) {
+          const img = await faceapi.fetchImage(`https://raw.githubusercontent.com/WebDevSimplified/Face-Recognition-JavaScript/master/labeled_images/${label}/${i}.jpg`)
+          const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
+          descriptions.push(detections.descriptor)
+        }
+  
+        this.labeledFaceDescriptors = new faceapi.LabeledFaceDescriptors(label, descriptions);
+        this.faceMatcher = new faceapi.FaceMatcher(this.labeledFaceDescriptors, 0.6);
+        document.body.append('Loaded');
+        return this.labeledFaceDescriptors;
+      })
+    )
+  }
+
+
+
+
 
   onPlayVideo(){
     const canvas = faceapi.createCanvasFromMedia(this.video)
@@ -52,11 +125,7 @@ export class TensorFLowJsComponent implements OnInit {
   }
 
 
-  ngAfterViewInit(){
-    this.video = document.getElementById('videoElement')
-    this.start();
 
-  }
 
   private start() {
     this.initCamera({ video: true, audio: false });
