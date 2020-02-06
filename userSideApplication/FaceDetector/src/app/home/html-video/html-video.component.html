@@ -7,12 +7,24 @@
     <button (click)="sound()" class="btn btn-danger">Play with Sound</button>
   </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="text-center">
-        <h3>
-          <video #videoElement></video>
-        </h3>
-      </div>
+
+  <div class="container vh-100">
+    <div class="d-flex flex-column align-items-center">
+       <div class="p-1">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="text-center">
+              <h3>
+                <video onplay="onPlayVideo()" #videoElement></video>
+              </h3>
+            </div>
+          </div>
+        </div>
+       <div class="pb-2">
+          <button class="btn btn-primary" (click)="capture()">Capture Image</button>
+       </div>
+       <div class="p-1">
+          <canvas #canvas class="vid"></canvas>
+       </div>
     </div>
-  </div>
+ </div>

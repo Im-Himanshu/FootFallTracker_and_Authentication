@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import {HtmlVideoComponent} from './html-video/html-video.component'
-
+import {TensorFLowJsComponent} from './tensor-flow-js/tensor-flow-js.component'
 @NgModule({
   imports: [
     CommonModule,
@@ -17,10 +17,11 @@ import {HtmlVideoComponent} from './html-video/html-video.component'
         path: '',
         component: HomePage
       },
-      { path: 'video', component: HtmlVideoComponent }
+      { path: 'video', component: HtmlVideoComponent },
+      { path: 'tensorflow', component: TensorFLowJsComponent}
     ])
   ],
-  declarations: [HomePage,HtmlVideoComponent],
+  declarations: [HomePage,HtmlVideoComponent,TensorFLowJsComponent],
   providers: []
 })
 export class HomePageModule {}

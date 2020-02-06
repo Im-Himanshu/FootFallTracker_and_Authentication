@@ -9,4 +9,7 @@ $ npm install @ionic-native/camera
 
 
 ionic cordova run android -lc
+
+
+https://justadudewhohacks.github.io/face-api.js/bbt_face_similarity
 ionic  serve -l
