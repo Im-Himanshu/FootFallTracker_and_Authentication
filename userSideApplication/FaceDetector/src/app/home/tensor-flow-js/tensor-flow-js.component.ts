@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit, ElementRef,Renderer2} from '@angular/core';
 import { ViewChild } from '@angular/core';
-import * as tf from '@tensorflow/tfjs';
 import * as faceapi from "face-api.js"
 @Component({
   selector: 'app-tensor-flow-js',
