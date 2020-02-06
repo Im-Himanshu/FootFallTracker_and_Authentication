@@ -17,3 +17,8 @@ https://stackoverflow.com/questions/44525746/global-angular-cli-version-greater-
 
 
 3. Running npm i @tensorflow/tfjs
+
+
+4. for browser case this tutorial worked 
+        https://medium.com/angular-in-depth/create-your-own-image-classifier-with-angular-and-tensorflow-js-5b1bc2391424
+    something is happening in its given library so don't know what is the difference

@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
+import {ActualTensorFlowComponent} from "./actual-tensor-flow/actual-tensor-flow.component"
+import {DrawableDirective} from "./drawable.directive"
 
 @NgModule({
   imports: [
@@ -15,9 +17,13 @@ import { HomePage } from './home.page';
       {
         path: '',
         component: HomePage
+      },
+      {
+        path: 'actual',
+        component: ActualTensorFlowComponent
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage,ActualTensorFlowComponent,DrawableDirective]
 })
 export class HomePageModule {}
