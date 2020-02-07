@@ -6,7 +6,9 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import {ActualTensorFlowComponent} from "./actual-tensor-flow/actual-tensor-flow.component"
-import {DrawableDirective} from "./drawable.directive"
+import {VideoInputComponent} from "./video-input/video-input.component"
+import {CameraPreview} from '@ionic-native/camera-preview/ngx';
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 
 @NgModule({
   imports: [
@@ -16,14 +18,19 @@ import {DrawableDirective} from "./drawable.directive"
     RouterModule.forChild([
       {
         path: '',
-        component: HomePage
+        component: VideoInputComponent
       },
       {
         path: 'actual',
         component: ActualTensorFlowComponent
+      },
+      {
+        path: 'videoInput',
+        component: VideoInputComponent
       }
     ])
   ],
-  declarations: [HomePage,ActualTensorFlowComponent,DrawableDirective]
+  declarations: [HomePage,ActualTensorFlowComponent,VideoInputComponent],
+  providers:[CameraPreview,Diagnostic]
 })
 export class HomePageModule {}

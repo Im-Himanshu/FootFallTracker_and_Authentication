@@ -1,5 +1,7 @@
 {
   "name": "faceDetection",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
