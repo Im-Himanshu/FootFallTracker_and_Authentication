@@ -18,7 +18,7 @@ import { MediaCapture } from '@ionic-native/media-capture/ngx';
 import { Media } from '@ionic-native/media/ngx';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
-
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 @NgModule({
   declarations: [AppComponent,VideoCaptureComponent,SimonVideoStreamWithStorageComponent],
   entryComponents: [],
@@ -37,7 +37,8 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
     File,
     ImagePicker,
     StreamingMedia,
-    PhotoViewer
+    PhotoViewer,
+    Diagnostic
 
   ],
   bootstrap: [AppComponent]

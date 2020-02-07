@@ -22,6 +22,7 @@ https://stackoverflow.com/questions/44525746/global-angular-cli-version-greater-
 4. for browser case this tutorial worked 
         https://medium.com/angular-in-depth/create-your-own-image-classifier-with-angular-and-tensorflow-js-5b1bc2391424
     something is happening in its given library so don't know what is the difference
+     but here able to access the camera from the app and stream it to the user, appropriate access need to be asked for before using mediaStreaming
 5. for using actual tensor flow this one worked for recognizing the type of number : USED THE MODEL GIVEN IN github repo
     https://rubikscode.net/2019/09/09/integration-of-tensorflow-model-into-angular-application/
 6.  running ionic camera integration : 
@@ -72,3 +73,9 @@ related problem discussed here : https://blog.tensorflow.org/2018/10/how-we-buil
  ionic corova platform remove andorid
  ionic corova platform add andorid
  
+
+
+
+ Overall Conclusion, everything that work in browser should work here also just that the permission need to aksed explicitly from the app via 
+ No it was problem related to the media-capture plugin it is discussed in detail here : 
+ https://stackoverflow.com/questions/24848301/cordova-audio-recording-issues-in-some-devices-phonegap-media-plugin

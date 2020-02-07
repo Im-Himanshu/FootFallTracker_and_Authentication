@@ -6,7 +6,7 @@ import { File, FileEntry } from '@ionic-native/File/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { StreamingMedia } from '@ionic-native/streaming-media/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
- 
+import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 const MEDIA_FOLDER_NAME = 'ionic_app'; 
 @Component({
   selector: 'app-simon-video-stream-with-storage',
@@ -26,11 +26,13 @@ export class SimonVideoStreamWithStorageComponent implements OnInit {
     private streamingMedia: StreamingMedia,
     private photoViewer: PhotoViewer,
     private actionSheetController: ActionSheetController,
-    private plt: Platform
+    private plt: Platform,
+    private diagnostic: Diagnostic
   ) {}
  
   ngOnInit() {
     this.plt.ready().then(() => {
+      this.checkPermissions();
       let path = this.file.dataDirectory;
       this.file.checkDir(path, MEDIA_FOLDER_NAME).then(
         () => {
@@ -126,6 +128,26 @@ export class SimonVideoStreamWithStorageComponent implements OnInit {
       },
       (err: CaptureError) => console.error(err)
     );
+  }
+
+
+  async checkPermissions(){
+    //isCameraAvailable() -- for checking if camera is there or not
+    this.diagnostic.isMicrophoneAuthorized().then((authorized) => {
+      if(authorized){
+        console.log("MicoPhone Authorized")
+      }
+      else {
+        this.diagnostic.requestMicrophoneAuthorization().then(async (status) => {
+              if(status == this.diagnostic.permissionStatus.GRANTED)
+                  console.log("didn't had the access, now given")
+              else {
+                  console.log("access denied for Audio")
+                  
+              }
+          });
+      }
+  });
   }
  
   recordVideo() {
