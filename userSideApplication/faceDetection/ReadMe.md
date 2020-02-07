@@ -47,7 +47,7 @@ Installing "cordova-plugin-compat" for android
         Skipping 'cordova-plugin-compat' for android
 
 
-12 now following this tutorial by simon : https://ionicacademy.com/capture-audio-video-local/
+12. now following this tutorial by simon : https://ionicacademy.com/capture-audio-video-local/
     REMOVING THE plugin ionic cordova plugin remove cordova-plugin-media
         adding it again : 
             # Install Cordova Plugins
@@ -61,3 +61,14 @@ Installing "cordova-plugin-compat" for android
         import { MediaCapture} from '@ionic-native/media-capture/ngx';
         import { Media } from '@ionic-native/media/ngx';
         import { File } from '@ionic-native/file/ngx';
+
+
+13. Just discovered : https://emojiscavengerhunt.withgoogle.com/ 
+    THIS Site is working in the browser only so can work on their solution as well for making thing works
+related problem discussed here : https://blog.tensorflow.org/2018/10/how-we-built-emoji-scavenger-hunt-using-tensorflow-js.html
+
+
+14 facing error in androidManifest.xml failing to build andorid so 
+ ionic corova platform remove andorid
+ ionic corova platform add andorid
+ 

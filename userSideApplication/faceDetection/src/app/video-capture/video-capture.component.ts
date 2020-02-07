@@ -6,6 +6,8 @@ import { VideoCapturePlus, VideoCapturePlusOptions, MediaFile } from '@ionic-nat
   templateUrl: './video-capture.component.html',
   styleUrls: ['./video-capture.component.scss'],
 })
+
+/** not working**/
 export class VideoCaptureComponent implements OnInit {
 
   constructor(private videoCapturePlus: VideoCapturePlus) { }
