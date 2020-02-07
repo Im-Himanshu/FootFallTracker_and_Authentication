@@ -37,7 +37,7 @@ export class SimonVideoStreamWithStorageComponent implements OnInit {
       limit: 1,
       duration: 30
     }
-    this.mediaCapture.captureVideo(options).then((res: MediaFile[]) => {
+    this.mediaCapture.captureVideo().then((res: MediaFile[]) => {
       let capturedFile = res[0];
       let fileName = capturedFile.name;
       let dir = capturedFile['localURL'].split('/');

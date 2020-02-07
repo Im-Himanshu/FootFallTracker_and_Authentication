@@ -30,7 +30,7 @@ export class HomePage {
   async ngAfterViewInit() {
     const vid = this.video.nativeElement;
 
-    if (navigator.mediaDevices.getUserMedia) {
+    if (navigator.mediaDevices.getUserMedia) { // this is only working for the local host if the ip is changed to the new one it will not work, see an alternative for this from somewhere
       navigator.mediaDevices.getUserMedia({ video: true })
         .then((stream) => {
           vid.srcObject = stream;

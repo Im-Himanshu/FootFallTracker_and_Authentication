@@ -6,9 +6,9 @@ import {SimonVideoStreamWithStorageComponent} from "./simon-video-stream-with-st
 
 
 const routes: Routes = [
-  { path: '', component :SimonVideoStreamWithStorageComponent },
+  //{ path: '', component :SimonVideoStreamWithStorageComponent },
   { path: 'second', component :VideoCaptureComponent },
-  //{ path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
 ];
 

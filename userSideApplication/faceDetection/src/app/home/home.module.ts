@@ -18,7 +18,7 @@ import { Diagnostic } from '@ionic-native/diagnostic/ngx';
     RouterModule.forChild([
       {
         path: '',
-        component: VideoInputComponent
+        component: HomePage
       },
       {
         path: 'actual',
