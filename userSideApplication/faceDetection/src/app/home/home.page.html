@@ -1,28 +1,54 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-menu
+  class="sideMenu"
+  side="end"
+  swipe-gesture="true"
+  menuId="first"
+  contentId="mainContent"
+>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Foot-Fall Tracker</ion-title>
 
-<ion-content>
-  <button>GoToVideo</button>
-  <div class="ion-padding">
-    <div class="d-flex justify-content-center align-items-center flex-column">
-      <video autoplay playsinline muted id="webcam" width="300" height="300" #video></video>
+      <img slot="secondary" src="assets/logo.png" height="58px" />
+    </ion-toolbar>
+  </ion-header>
 
-      <a routerLink="/first" routerLinkActive="active">first</a>
-      <a routerLink="/second" routerLinkActive="active">Second</a>
-      <div *ngIf="loading">
-        <img src="./assets/loading.gif">
-      </div>
-    
-      <div class="list-group">
-        <div class="list-group-item" *ngFor="let prediction of predictions">
-          {{prediction.className}} - {{prediction.probability}}
-        </div>
-      </div>
-    </div>
-  </div>
-</ion-content>
+  <ion-content fullscreen>
+    <ion-list>
+      <ion-item (click)="presentHowToUseModal()">
+        <ion-icon name="help-circle" slot="start"></ion-icon>
+        <ion-label>How To Use?</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="mainContent" main>
+  <ion-header translucent>
+    <ion-toolbar class="mainToolbar">
+      <img slot="start" src="assets/logo.png" height="44px" />
+      <!-- <img src="assets/logo.png" alt="appIcon"> -->
+      <ion-title class="titleicon">{{appTitle}}</ion-title>
+      <ion-buttons slot="secondary">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-tabs class="tabs">
+      <ion-tab-bar class="navigatonMenubar" slot="bottom">
+        <ion-tab-button tab="register">
+          <ion-icon name="calendar"></ion-icon>
+          <ion-label>Register New User</ion-label>
+        </ion-tab-button>
+        <ion-tab-button tab="track">
+          <ion-icon name="paper"></ion-icon>
+          <ion-label>Track</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-content>
+</div>
