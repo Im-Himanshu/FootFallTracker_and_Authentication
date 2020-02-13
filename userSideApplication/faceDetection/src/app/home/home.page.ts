@@ -9,6 +9,7 @@ import {
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
 declare var faceapi: any;
+import { RegisteredUserService } from "./registered-user.service";
 @Component({
   selector: "app-home",
   templateUrl: "home.page.html",
@@ -16,7 +17,11 @@ declare var faceapi: any;
 })
 export class HomePage {
   appTitle = "Foot-Fall Tracker";
-  constructor() {}
+  constructor(private appService: RegisteredUserService) {}
 
   async ngOnInit() {}
+
+  tabsChanging() {
+    this.appService.onTabChangeEvent.next("changing");
+  }
 }

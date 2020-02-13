@@ -38,7 +38,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <ion-tabs class="tabs">
+    <ion-tabs class="tabs" (ionTabsDidChange) = "tabsChanging()">
       <ion-tab-bar class="navigatonMenubar" slot="bottom">
         <ion-tab-button tab="register">
           <ion-icon name="calendar"></ion-icon>

@@ -8,16 +8,25 @@
     </ion-card-content>
   </ion-card>
   <p>{{ liveMessages }}</p>
-
-  <ion-button (click)="registerUserFromVideo()">Take from Video</ion-button>
+  <ion-button [disabled]="isCameraClosed" (click)="registerUserFromVideo()">
+    Start Capturing
+  </ion-button>
 
   <ion-button (click)="toggleCamera()">Toggle Camera</ion-button>
 
+  <ion-button
+    [disabled]="!isImageCapturingCompleted || captures.length < threshold"
+    (click)="submitDetails()"
+    >Submit Data</ion-button
+  >
   <div>
     <canvas #canvas2 id="canvas2"></canvas>
     <ul>
-      <li *ngFor="let c of captures">
-        <img src="{{ c }}" height="50" />
+      <li *ngFor="let c of captures; let i = index">
+        <img (click)="onImageClick(c)" src="{{ c }}" height="80" />
+        <ion-badge (click)="removeImage(i)"
+          ><ion-icon name="close-circle-outline"></ion-icon
+        ></ion-badge>
       </li>
     </ul>
   </div>

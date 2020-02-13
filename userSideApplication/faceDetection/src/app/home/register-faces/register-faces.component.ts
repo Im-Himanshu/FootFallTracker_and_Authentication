@@ -3,12 +3,17 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  AfterViewInit
+  AfterViewInit,
+  Inject
 } from "@angular/core";
-import * as mobilenet from "@tensorflow-models/mobilenet";
-import * as tf from "@tensorflow/tfjs";
 import { RegisteredUserService } from "../registered-user.service";
 declare var faceapi: any;
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA
+} from "@angular/material/dialog";
+
 @Component({
   selector: "app-register-faces",
   templateUrl: "./register-faces.component.html",
@@ -27,17 +32,24 @@ export class RegisterFacesComponent implements OnInit {
   isCameraClosed = true;
   liveMessages: string;
   isLiveDetectionRunning: boolean;
-  public captures: Array<any>;
-  public allDetection: Array<any>;
+  public captures;
+  public allDetection;
   isImageCapturingCompleted = false;
-  constructor(private appService: RegisteredUserService) {
+  threshold = 6;
+  constructor(
+    private appService: RegisteredUserService,
+    public dialog: MatDialog
+  ) {
     this.captures = [];
     this.allDetection = [];
   }
   async ngOnInit() {}
 
   async ngAfterViewInit() {
-    this.toggleCamera();
+    //this.toggleCamera();
+    this.appService.onTabChangeEvent.subscribe(data => {
+      this.toggleCamera();
+    });
   }
 
   toggleCamera() {
@@ -56,8 +68,9 @@ export class RegisterFacesComponent implements OnInit {
     }
     this.isCameraClosed = !this.isCameraClosed;
   }
+
   startVideo() {
-    this.appService.presentLoading("Loading Camera....");
+    //this.appService.presentLoading("Loading Camera....");
     const vid = this.video.nativeElement; // feeding everytime in case firsttime it didn't worked
     this.videoNativeElement = vid;
     if (navigator.mediaDevices.getUserMedia) {
@@ -67,13 +80,36 @@ export class RegisterFacesComponent implements OnInit {
         .then(stream => {
           vid.srcObject = stream;
           vid.play();
-          this.appService.dismissLoader();
-          this.appService.presentToast("Camera opened...");
+          //this.appService.dismissLoader();
+          this.appService.presentToast("Camera is now open!!");
         })
         .catch(error => {
           console.log("Something went wrong!");
         });
     }
+    //this.appService.dismissLoader();
+  }
+  registerUserFromVideo() {
+    this.appService.LoadModels().then(async data => {
+      if (!this.isLiveDetectionRunning) {
+        this.liveDetectPersoninFrame();
+      }
+
+      const process = setInterval(async () => {
+        this.saveImageFromCurrentFrame();
+        if (this.allDetection.length > 6) {
+          // if the detected image size is greater then 6 exit the process.
+          clearInterval(process);
+          clearInterval(this.faceDetectionProcess);
+          this.isLiveDetectionRunning = false;
+          this.appService.presentToast("Captured Images");
+          this.isImageCapturingCompleted = true;
+          this.toggleCamera();
+          this.stopDetectingPersonInFrame();
+          this.submitDetails();
+        }
+      }, 1000);
+    });
   }
 
   // this will be to show
@@ -118,35 +154,16 @@ export class RegisterFacesComponent implements OnInit {
       clearInterval(this.faceDetectionProcess); // this will kill the loop of liveDetection
       let canvas = this.canvasnativeElement; // clear the canvas after the draw
       canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
-      this.liveMessages = "";
+      this.liveMessages = null;
+      this.isLiveDetectionRunning = false;
     }
   }
 
-  registerUserFromPhoto() {
-    this.liveDetectPersoninFrame();
+  reDoCapturing() {
+    this.allDetection = [];
+    this.captures = [];
+    this.registerUserFromVideo();
   }
-
-  registerUserFromVideo() {
-    this.appService.LoadModels().then(async data => {
-      if (!this.isLiveDetectionRunning) {
-        this.liveDetectPersoninFrame();
-      }
-
-      const process = setInterval(async () => {
-        this.saveImageFromCurrentFrame();
-        if (this.allDetection.length > 6) {
-          // if the detected image size is greater then 6 exit the process.
-          clearInterval(process);
-          clearInterval(this.faceDetectionProcess);
-          this.isLiveDetectionRunning = false;
-          this.appService.presentToast("Captured Images");
-          this.isImageCapturingCompleted = true;
-        }
-      }, 1000);
-    });
-  }
-
-  reDoCapturing() {}
 
   async saveImageFromCurrentFrame() {
     const video = this.video.nativeElement;
@@ -161,7 +178,7 @@ export class RegisterFacesComponent implements OnInit {
       .withFaceLandmarks()
       .withFaceDescriptors();
     const resizedDetections = faceapi.resizeResults(detections, displaySize);
-    // this resize calculate the x,y cordinate of features after compresign the photo to a certain width and height
+    // this resize calculate the x,y cordinate of features after compresing the photo to a certain width and height
 
     if (resizedDetections.length != 0 && resizedDetections.length < 2) {
       var context = this.canvas2.nativeElement
@@ -173,7 +190,7 @@ export class RegisterFacesComponent implements OnInit {
           video.videoWidth,
           video.videoHeight
         );
-      this.allDetection.push(resizedDetections);
+      this.allDetection.push(resizedDetections[0].descriptor);
       this.captures.push(this.canvas2.nativeElement.toDataURL("image/png"));
       let oneDetection = detections[0].detection._box;
       //not working properly as of now
@@ -187,5 +204,45 @@ export class RegisterFacesComponent implements OnInit {
       // this.allDetection.push(resizedDetections);
       // this.captures.push(this.canvas2.nativeElement.toDataURL("image/png"));
     }
+  }
+
+  removeImage(i) {
+    this.captures.splice(i, 1);
+    this.allDetection.splice(i, 1);
+    this.appService.presentToast("Image removed!!");
+  }
+
+  submitDetails(): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: "250px",
+      data: this.captures
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.saveData(result);
+    });
+  }
+
+  saveData(name) {
+    this.appService.addLabeledData(name, this.allDetection);
+    this.captures = [];
+    this.allDetection = [];
+    this.isImageCapturingCompleted = false;
+    this.appService.presentToast("Successfully Added!!!");
+  }
+}
+
+@Component({
+  selector: "confirmationDialog",
+  templateUrl: "confirmationDialog.html"
+})
+export class DialogOverviewExampleDialog {
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

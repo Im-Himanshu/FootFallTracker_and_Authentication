@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { IonicModule } from "@ionic/angular";
 import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
-
+import { MatDialogModule } from "@angular/material/dialog";
 import { HomePage } from "./home.page";
 import { ActualTensorFlowComponent } from "./actual-tensor-flow/actual-tensor-flow.component";
 import { VideoInputComponent } from "./video-input/video-input.component";
@@ -12,11 +12,15 @@ import { Diagnostic } from "@ionic-native/diagnostic/ngx";
 import { RegisterFacesComponent } from "./register-faces/register-faces.component";
 import { TrackActivitiesComponent } from "./track-activities/track-activities.component";
 import { RegisteredUserService } from "./registered-user.service";
+import { DialogOverviewExampleDialog } from "./register-faces/register-faces.component";
+import { MatButtonModule } from "@angular/material/button";
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    MatDialogModule,
+    MatButtonModule,
     RouterModule.forChild([
       {
         path: "",
@@ -52,8 +56,10 @@ import { RegisteredUserService } from "./registered-user.service";
     ActualTensorFlowComponent,
     VideoInputComponent,
     RegisterFacesComponent,
-    TrackActivitiesComponent
+    TrackActivitiesComponent,
+    DialogOverviewExampleDialog
   ],
-  providers: [CameraPreview, Diagnostic, RegisteredUserService]
+  providers: [CameraPreview, Diagnostic, RegisteredUserService],
+  entryComponents: [DialogOverviewExampleDialog]
 })
 export class HomePageModule {}
