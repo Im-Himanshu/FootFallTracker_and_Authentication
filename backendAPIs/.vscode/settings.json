@@ -1,0 +1,8 @@
+{
+	"python.pythonPath": "C:\\Users\\Himanshu\\.conda\\envs\\backend\\python.exe",
+	"python.formatting.provider": "yapf",
+	"python.venvFolders": [
+		"C:\\Users\\Himanshu\\.conda\\envs"
+	],
+	"python.venvPath": "C:\\Users\\Himanshu\\.conda\\envs\\"
+}
