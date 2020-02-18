@@ -38,3 +38,7 @@ mysql://sql12323255:c61Gu8jKBL@sql12.freemysqlhosting.net:3306/sql12323255
 mysql://username:password@server/db
 
 db.create_all()
+
+
+to avoid the db error do this 
+https://stackoverflow.com/a/51873749/9850713

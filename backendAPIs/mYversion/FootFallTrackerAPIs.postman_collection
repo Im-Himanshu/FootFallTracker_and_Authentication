@@ -1,0 +1,447 @@
+{
+	"info": {
+		"_postman_id": "629f96b3-3d2a-481f-b334-ee00b44d32cd",
+		"name": "Python BackEnd",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "gyms",
+			"item": [
+				{
+					"name": "getAllGyms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:5000/getAllGyms",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"getAllGyms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneGym",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:5000/getGymDetails/2",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"getGymDetails",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addNewGym",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"GYM_ID\" :\"5\", \r\n\"GYM_NAME\" : \"ABS-5\",\r\n\"AUTH_METHOD\" : \"gmail\",\r\n\"PASSWD\" : \"random\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/addNewGym",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"addNewGym"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateGym",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"GYM_ID\" :\"4\", \r\n\"GYM_NAME\" : \"ABS-4-Changed2\",\r\n\"AUTH_METHOD\" : \"gmail-Chnaged\",\r\n\"PASSWD\" : \"random-chnaged\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/updateGym/4",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"updateGym",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "gymMember",
+			"item": [
+				{
+					"name": "getAllGymMember",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:5000/getAllGymMember",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"getAllGymMember"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneGymMember",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:5000/getGymMemberDetails/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"getGymMemberDetails",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addNewGymMember",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"MEMBER_ID\" :\"2\", \r\n\"MEMBER_NAME\" : \"himanshu\",\r\n\"GYM_ID\" : \"1\",\r\n\"ENCODINGS\" : \"{'1' : ['encoding1'], '2' : ['Encoding2']'}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/addNewGymMember",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"addNewGymMember"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateGymMember",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"MEMBER_ID\" :\"1\", \n\"MEMBER_NAME\" : \"Himanshu-Changed10\",\n\"GYM_ID\" : \"1\",\n\"ENCODINGS\" : \"{'1' : ['encoding1'], '2' : ['Encoding2']'}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/updateGymMember/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"updateGymMember",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "footFall",
+			"item": [
+				{
+					"name": "getAllFootFall",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:5000/getAllfootFalls",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"getAllfootFalls"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getfootFallDetails",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "localhost:5000/getfootFallDetails/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"getfootFallDetails",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addNewfootFall",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"FOOTFALL_ID\" : \"2\",\r\n    \"MEMBER_ID\" : \"2\",\r\n    \"GYM_ID\" : \"1\",\r\n    \"FOOTFALL_TIMESTAMP\" : \"2017-07-05T22:16:18Z\",\r\n    \"ENTRY_EXIT\" : \"ENtry\",\r\n    \"X_COORD_FRAC\" : 0.4,\r\n    \"Y_COORD_FRAC\" : 0.3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/addNewfootFall",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"addNewfootFall"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatefootFall",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"FOOTFALL_ID\" : \"1\",\r\n    \"MEMBER_ID\" : \"1\",\r\n    \"GYM_ID\" : \"1\",\r\n    \"FOOTFALL_TIMESTAMP\" : \"12/08/1996\",\r\n    \"ENTRY_EXIT\" : \"ENtry-edit\",\r\n    \"X_COORD_FRAC\" : 0.4,\r\n    \"Y_COORD_FRAC\" : 0.3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:5000/updatefootFall/1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"updatefootFall",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "testing flask",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"username\" :\"Himanshu Goyal3341\",\r\n\"email\" : \"somthing33341\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testing flask Copy",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:5000/gyms",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"gyms"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
