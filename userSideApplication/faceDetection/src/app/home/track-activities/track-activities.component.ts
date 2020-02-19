@@ -31,13 +31,33 @@ export class TrackActivitiesComponent implements OnInit {
   public allDetection;
   isImageCapturingCompleted = false;
   threshold = 6;
+  numPersistedFrames: number = 10;
+  currentPersistedFrames;
+  
+  
+  fixedLengthQueue(length) {
+    var array = new Array();
+
+    array.push = () => {
+        if (this.length >= length) {
+            this.shift();
+        }
+        return Array.prototype.push.apply(this,arguments);
+    }
+
+    return array;
+  }
+
 
   istoShowSpinner = true;
   constructor(private appService: RegisteredUserService) {
     this.appService.onTabChangeEvent.subscribe(data => {
       this.toggleCamera(); // either this or that
     });
+	
+    this.currentPersistedFrames = fixedLengthQueue(this.faceDetectionFramesLength)	
   }
+  
   async ngOnInit() {}
 
   toggleCamera() {
@@ -113,10 +133,25 @@ export class TrackActivitiesComponent implements OnInit {
           const drawBox = new faceapi.draw.DrawBox(box, {
             label: result.toString()
           });
-
+		  isFaceAlreadyPresentInPersistedFrames: boolean = false
+		  for (let faces_detected_in_persisted_frame of this.currentPersistedFrames) {
+			for (let face in faces_detected_in_persisted_frame) {
+			  if(face.label == result.label) {
+				isFaceAlreadyPresentInPersistedFrames = true
+				break
+			  }
+			}
+			if(isFaceAlreadyPresentInPersistedFrames) break
+		  }
+		  if(isFaceAlreadyPresentInPersistedFrames == false) {
+			// Send backend call to log new footfall
+		  }
           console.log("existing user detected :" + result.toString());
-          drawBox.draw(canvas);
+          drawBox.draw(canvas);		  
         });
+		
+		this.currentPersistedFrames.push(results)
+		
         // faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
       }, 1000); // every
       //this.appService.dismissLoader();
