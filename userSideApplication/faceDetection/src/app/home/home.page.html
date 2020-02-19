@@ -1,10 +1,4 @@
-<ion-menu
-  class="sideMenu"
-  side="end"
-  swipe-gesture="true"
-  menuId="first"
-  contentId="mainContent"
->
+<ion-menu class="sideMenu" side="end" swipe-gesture="true" menuId="first" contentId="mainContent">
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
@@ -22,6 +16,10 @@
         <ion-icon name="help-circle" slot="start"></ion-icon>
         <ion-label>How To Use?</ion-label>
       </ion-item>
+      <ion-item (click)="logOut()">
+        <ion-icon name="log-out" slot="start"></ion-icon>
+        <ion-label>Log Out</ion-label>
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-menu>
@@ -38,7 +36,7 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <ion-tabs class="tabs" (ionTabsDidChange) = "tabsChanging()">
+    <ion-tabs class="tabs" (ionTabsDidChange)="tabsChanging()">
       <ion-tab-bar class="navigatonMenubar" slot="bottom">
         <ion-tab-button tab="register">
           <ion-icon name="calendar"></ion-icon>

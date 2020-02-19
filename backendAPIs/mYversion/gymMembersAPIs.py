@@ -2,7 +2,9 @@ from config import app
 from gymMembersModel import GymMember, GymMemberSchema
 from flask import jsonify, request
 from flask import Blueprint
+from flask_api import status
 from config import db
+import config
 import json
 
 gymMember_apis = Blueprint(
@@ -33,6 +35,8 @@ def add_gymMember():
     MEMBER_NAME = request.json['MEMBER_NAME']
     GYM_ID = request.json['GYM_ID']
     ENCODINGS = request.json['ENCODINGS']
+    #ENCODINGS = json.dumps(ENCODINGS)
+    # will convert json to string for persisting with None to null
     #GYM_ID, GYM_NAME, AUTH_METHOD, PASSWD
     new_GymMember = GymMember(MEMBER_ID, MEMBER_NAME, GYM_ID, ENCODINGS)
     db.session.add(new_GymMember)

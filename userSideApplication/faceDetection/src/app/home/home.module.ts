@@ -14,6 +14,8 @@ import { TrackActivitiesComponent } from "./track-activities/track-activities.co
 import { RegisteredUserService } from "./registered-user.service";
 import { DialogOverviewExampleDialog } from "./register-faces/register-faces.component";
 import { MatButtonModule } from "@angular/material/button";
+import { HttpClientModule } from '@angular/common/http';
+import { ApisService } from "./services/apis.service"
 @NgModule({
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { MatButtonModule } from "@angular/material/button";
     IonicModule,
     MatDialogModule,
     MatButtonModule,
+    HttpClientModule,
     RouterModule.forChild([
       {
         path: "",
@@ -59,7 +62,7 @@ import { MatButtonModule } from "@angular/material/button";
     TrackActivitiesComponent,
     DialogOverviewExampleDialog
   ],
-  providers: [CameraPreview, Diagnostic, RegisteredUserService],
+  providers: [CameraPreview, Diagnostic, RegisteredUserService, ApisService],
   entryComponents: [DialogOverviewExampleDialog]
 })
-export class HomePageModule {}
+export class HomePageModule { }

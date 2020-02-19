@@ -1,0 +1,32 @@
+<h4 text-center margin-top>Insert your credentials</h4>
+
+<ion-item>
+  <ion-label stacked>Email ID</ion-label>
+  <ion-input type="email" [(ngModel)]="loginForm.email"></ion-input>
+  <span *ngIf="errorinLoginForm.email">Not a Valid Email Address</span>
+</ion-item>
+
+<ion-item>
+  <ion-label stacked>Password</ion-label>
+  <ion-input type="password" [(ngModel)]="loginForm.password"></ion-input>
+  <span *ngIf="errorinLoginForm.password">Enter this field</span>
+</ion-item>
+
+<ion-item>
+  <ion-label stacked>Re-enter Password</ion-label>
+  <ion-input type="password" [(ngModel)]="loginForm.rePassword"></ion-input>
+  <span *ngIf="errorinLoginForm.repassword">Not matching</span>
+</ion-item>
+
+<div text-center margin-top>
+  <button ion-button color="secondary" (click)="doEmailPasswordLogin()">
+    SIGN IN
+  </button>
+  <a href="/signup">New User? Sign UP</a>
+  <ion-button (click)="tryGoogleLogin()">
+    Sign In with Google
+  </ion-button>
+  <ion-button (click)="tryFacebookLogin()">
+    Sign In with Facebook
+  </ion-button>
+</div>

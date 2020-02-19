@@ -13,6 +13,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
+import { ApisService } from "../services/apis.service"
 
 @Component({
   selector: "app-register-faces",
@@ -38,27 +39,39 @@ export class RegisterFacesComponent implements OnInit {
   threshold = 6;
   constructor(
     private appService: RegisteredUserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private apiService: ApisService
+
   ) {
     this.captures = [];
     this.allDetection = [];
   }
-  async ngOnInit() {}
+  async ngOnInit() { }
 
   async ngAfterViewInit() {
-    //this.toggleCamera();
+    this.toggleCamera();
     this.appService.onTabChangeEvent.subscribe(data => {
       this.toggleCamera();
     });
   }
+  triggerService() {
+    let formData = {
+      "GYM_ID": "10",
+      "GYM_NAME": "ABS-UI",
+      "AUTH_METHOD": "gmail",
+      "PASSWD": "random"
+    }
+    this.apiService.addNewGym(formData);
+    this.apiService.getAllGyms();
 
+  }
   toggleCamera() {
     const vid = this.video.nativeElement;
     let stream = vid.srcObject;
     if (stream) {
       vid.srcObject = null;
       let tracks = stream.getTracks();
-      tracks.forEach(function(track) {
+      tracks.forEach(function (track) {
         track.stop();
       });
       this.appService.presentToast("Camera was closed!!");
@@ -240,7 +253,7 @@ export class DialogOverviewExampleDialog {
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   onNoClick(): void {
     this.dialogRef.close();

@@ -11,22 +11,21 @@
   <ion-button [disabled]="isCameraClosed" (click)="registerUserFromVideo()">
     Start Capturing
   </ion-button>
-
+  <ion-button (click)="triggerService()">
+    test Service
+  </ion-button>
   <ion-button (click)="toggleCamera()">Toggle Camera</ion-button>
 
-  <ion-button
-    [disabled]="!isImageCapturingCompleted || captures.length < threshold"
-    (click)="submitDetails()"
-    >Submit Data</ion-button
-  >
+  <ion-button [disabled]="!isImageCapturingCompleted || captures.length < threshold" (click)="submitDetails()">Submit
+    Data</ion-button>
   <div>
     <canvas #canvas2 id="canvas2"></canvas>
     <ul>
       <li *ngFor="let c of captures; let i = index">
         <img (click)="onImageClick(c)" src="{{ c }}" height="80" />
-        <ion-badge (click)="removeImage(i)"
-          ><ion-icon name="close-circle-outline"></ion-icon
-        ></ion-badge>
+        <ion-badge (click)="removeImage(i)">
+          <ion-icon name="close-circle-outline"></ion-icon>
+        </ion-badge>
       </li>
     </ul>
   </div>

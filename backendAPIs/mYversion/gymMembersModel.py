@@ -1,6 +1,5 @@
 from config import db, ma
-from sqlalchemy import Column, String, ForeignKey
-import json
+from sqlalchemy import Column, String, ForeignKey, JSON
 
 # CREATE TABLE GYM_MEMBERS
 # (
@@ -22,7 +21,9 @@ class GymMember(db.Model):
                     ForeignKey("GYMS.GYM_ID"),
                     index=False,
                     nullable=False)
-    ENCODINGS = Column(String(500), index=False, nullable=True)
+    ENCODINGS = Column(JSON, index=False, nullable=True)
+
+    # how to work with it ? -- https://medium.com/aubergine-solutions/working-with-mysql-json-data-type-with-prepared-statements-using-it-in-go-and-resolving-the-15ef14974c48
 
     def __init__(self, MEMBER_ID, MEMBER_NAME, GYM_ID, ENCODINGS):
         self.MEMBER_ID = MEMBER_ID
