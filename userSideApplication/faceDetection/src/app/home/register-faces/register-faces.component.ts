@@ -50,9 +50,6 @@ export class RegisterFacesComponent implements OnInit {
 
   async ngAfterViewInit() {
     this.toggleCamera();
-    this.appService.onTabChangeEvent.subscribe(data => {
-      this.toggleCamera();
-    });
   }
   triggerService() {
     let formData = {
@@ -63,6 +60,14 @@ export class RegisterFacesComponent implements OnInit {
     }
     this.apiService.addNewGym(formData);
     this.apiService.getAllGyms();
+
+  }
+
+  async ngOnDestroy() {
+
+    if (!this.isCameraClosed) {
+      this.toggleCamera();
+    }
 
   }
   toggleCamera() {

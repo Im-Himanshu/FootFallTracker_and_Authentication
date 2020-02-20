@@ -3,7 +3,8 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  AfterViewInit
+  AfterViewInit,
+  OnDestroy
 } from "@angular/core";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
@@ -15,7 +16,7 @@ declare var faceapi: any;
   templateUrl: "./track-activities.component.html",
   styleUrls: ["./track-activities.component.scss"]
 })
-export class TrackActivitiesComponent implements OnInit {
+export class TrackActivitiesComponent implements OnInit, OnDestroy {
   @ViewChild("video", { static: true }) video: ElementRef; //canvas
   @ViewChild("canvas", { static: true }) canvas: ElementRef;
 
@@ -33,17 +34,17 @@ export class TrackActivitiesComponent implements OnInit {
   threshold = 6;
   numPersistedFrames: number = 10;
   currentPersistedFrames;
-  
-  
+
+
   fixedLengthQueue(length) {
     var array = new Array();
 
-    array.push = () => {
-        if (this.length >= length) {
-            this.shift();
-        }
-        return Array.prototype.push.apply(this,arguments);
-    }
+    // array.push = () => {
+    //     if (this.length >= length) {
+    //         this.shift();
+    //     }
+    //     return Array.prototype.push.apply(this,arguments);
+    // }
 
     return array;
   }
@@ -54,11 +55,24 @@ export class TrackActivitiesComponent implements OnInit {
     this.appService.onTabChangeEvent.subscribe(data => {
       this.toggleCamera(); // either this or that
     });
-	
-    this.currentPersistedFrames = fixedLengthQueue(this.faceDetectionFramesLength)	
+
+    //this.currentPersistedFrames = fixedLengthQueue(this.faceDetectionFramesLength)	
   }
-  
-  async ngOnInit() {}
+
+  async ngOnInit() {
+  }
+
+  async ngAfterViewInit() {
+    this.toggleCamera();
+  }
+
+  async ngOnDestroy() {
+
+    if (!this.isCameraClosed) {
+      this.toggleCamera();
+    }
+
+  }
 
   toggleCamera() {
     const vid = this.video.nativeElement;
@@ -66,7 +80,7 @@ export class TrackActivitiesComponent implements OnInit {
     if (stream) {
       vid.srcObject = null;
       let tracks = stream.getTracks();
-      tracks.forEach(function(track) {
+      tracks.forEach(function (track) {
         track.stop();
       });
       this.appService.presentToast("Camera was closed!!");
@@ -77,7 +91,7 @@ export class TrackActivitiesComponent implements OnInit {
   }
 
   startVideo() {
-    this.appService.presentLoading("Loading Camera....");
+    //this.appService.presentLoading("Loading Camera....");
     const vid = this.video.nativeElement; // feeding everytime in case firsttime it didn't worked
     this.videoNativeElement = vid;
     if (navigator.mediaDevices.getUserMedia) {
@@ -87,7 +101,6 @@ export class TrackActivitiesComponent implements OnInit {
         .then(stream => {
           vid.srcObject = stream;
           vid.play();
-          this.appService.dismissLoader();
           this.appService.presentToast("Camera is now open!!");
         })
         .catch(error => {
@@ -133,25 +146,25 @@ export class TrackActivitiesComponent implements OnInit {
           const drawBox = new faceapi.draw.DrawBox(box, {
             label: result.toString()
           });
-		  isFaceAlreadyPresentInPersistedFrames: boolean = false
-		  for (let faces_detected_in_persisted_frame of this.currentPersistedFrames) {
-			for (let face in faces_detected_in_persisted_frame) {
-			  if(face.label == result.label) {
-				isFaceAlreadyPresentInPersistedFrames = true
-				break
-			  }
-			}
-			if(isFaceAlreadyPresentInPersistedFrames) break
-		  }
-		  if(isFaceAlreadyPresentInPersistedFrames == false) {
-			// Send backend call to log new footfall
-		  }
+          // isFaceAlreadyPresentInPersistedFrames: boolean = false
+          // for (let faces_detected_in_persisted_frame of this.currentPersistedFrames) {
+          // for (let face in faces_detected_in_persisted_frame) {
+          //   if(face.label == result.label) {
+          // 	isFaceAlreadyPresentInPersistedFrames = true
+          // 	break
+          //   }
+          // }
+          // if(isFaceAlreadyPresentInPersistedFrames) break
+          // }
+          // if(isFaceAlreadyPresentInPersistedFrames == false) {
+          // // Send backend call to log new footfall
+          // }
           console.log("existing user detected :" + result.toString());
-          drawBox.draw(canvas);		  
+          drawBox.draw(canvas);
         });
-		
-		this.currentPersistedFrames.push(results)
-		
+
+        this.currentPersistedFrames.push(results)
+
         // faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
       }, 1000); // every
       //this.appService.dismissLoader();
