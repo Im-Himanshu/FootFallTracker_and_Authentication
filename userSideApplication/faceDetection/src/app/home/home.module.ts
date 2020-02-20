@@ -12,10 +12,11 @@ import { Diagnostic } from "@ionic-native/diagnostic/ngx";
 import { RegisterFacesComponent } from "./register-faces/register-faces.component";
 import { TrackActivitiesComponent } from "./track-activities/track-activities.component";
 import { RegisteredUserService } from "./registered-user.service";
-import { DialogOverviewExampleDialog } from "./register-faces/register-faces.component";
+import { DialogOverviewExampleDialog } from "./register-and-track/register-and-track.component";
 import { MatButtonModule } from "@angular/material/button";
 import { HttpClientModule } from '@angular/common/http';
 import { ApisService } from "./services/apis.service"
+import { RegisterAndTrackComponent } from "./register-and-track/register-and-track.component"
 @NgModule({
   imports: [
     CommonModule,
@@ -43,6 +44,10 @@ import { ApisService } from "./services/apis.service"
             component: TrackActivitiesComponent
           },
           {
+            path: "registerTrack",
+            component: RegisterAndTrackComponent
+          },
+          {
             path: "actual",
             component: ActualTensorFlowComponent
           },
@@ -60,6 +65,7 @@ import { ApisService } from "./services/apis.service"
     VideoInputComponent,
     RegisterFacesComponent,
     TrackActivitiesComponent,
+    RegisterAndTrackComponent,
     DialogOverviewExampleDialog
   ],
   providers: [CameraPreview, Diagnostic, RegisteredUserService, ApisService],

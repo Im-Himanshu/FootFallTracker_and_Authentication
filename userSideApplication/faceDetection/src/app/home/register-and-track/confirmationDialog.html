@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Fill up the details</h1>
+<div mat-dialog-content>
+  <p>Name of the Person?</p>
+  <ul>
+    <li *ngFor="let c of captures; let i = index">
+      <img (click)="onImageClick(c)" src="{{ c }}" height="20" />
+    </li>
+  </ul>
+  <input [(ngModel)]="data.category" />
+  <!-- <input [(ngModel)]="data.animal" /> -->
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.category" cdkFocusInitial>
+    Ok
+  </button>
+</div>

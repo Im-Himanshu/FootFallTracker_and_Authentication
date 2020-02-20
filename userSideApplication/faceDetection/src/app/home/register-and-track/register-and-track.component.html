@@ -1,0 +1,43 @@
+<ion-content>
+  <ion-card>
+    <ion-toggle (ionChange)="changeCamera()" [(ngModel)]="isCameraOpen"></ion-toggle>
+    <ion-card-content style="padding: 0;">
+      <div class="container">
+        <video playsinline muted id="webcam" #video></video>
+        <div id="canvas" #canvas></div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngIf="!istrackingProcessRunning">
+    <p>{{ liveMessages }}</p>
+    <ion-button [disabled]="!isCameraOpen" *ngIf="registrationProcesStatus == 0" (click)="registerUserFromVideo()">
+      Register New User </ion-button>
+    <ion-button *ngIf="registrationProcesStatus === 1" (click)="submitDetails2()">
+      Toggle Process
+    </ion-button>
+    <ion-button *ngIf="registrationProcesStatus === 2" (click)="submitDetails()">Submit
+      Data</ion-button>
+    <div>
+      <ul>
+        <li *ngFor="let c of captures; let i = index">
+          <img (click)="onImageClick(c)" src="{{ c }}" height="80" />
+          <ion-badge (click)="removeImage(i)">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </ion-badge>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <div #trackingMode *ngIf="registrationProcesStatus === 0">
+    <ion-button [disabled]="!isCameraOpen" *ngIf="!istrackingProcessRunning" (click)="startTracking()">
+      Start Tracking
+    </ion-button>
+
+    <ion-button *ngIf="istrackingProcessRunning" (click)="stopTracking()">
+      Stop Tracking
+    </ion-button>
+  </div>
+</ion-content>
