@@ -188,11 +188,14 @@ export class RegisterAndTrackComponent implements OnInit {
         width: video.clientWidth,
         height: video.clientHeight
       };
+      const displaySize2 = {
+        width: video.videoWidth,
+        height: video.videoHeight
+      };
       faceapi.matchDimensions(canvas, displaySize);
-      faceapi.matchDimensions(canvasForImage, displaySize);
+      faceapi.matchDimensions(canvasForImage, displaySize2);
       this.registrationProcesStatus = 1;
       this.registrationProcess = setInterval(async () => {
-
         if (!this.isCameraOpen) {
           this.appService.presentToast("Camera Was closed during registration Process..");
           this.registrationProcesStatus = 0;
@@ -209,7 +212,6 @@ export class RegisterAndTrackComponent implements OnInit {
         // draw detection
         canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
         faceapi.draw.drawDetections(canvas, resizedDetections);
-        faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
         /// save detections
         if (resizedDetections.length != 0 && resizedDetections.length < 2) {
           var context = canvasForImage
@@ -225,7 +227,6 @@ export class RegisterAndTrackComponent implements OnInit {
           this.captures.push(canvasForImage.toDataURL("image/png"));
         }
         if (this.allDetection.length >= 6) {
-
           this.afterRegistrationEnd();
           this.registrationProcesStatus = 2;
           this.appService.presentToast("Captured Images");
