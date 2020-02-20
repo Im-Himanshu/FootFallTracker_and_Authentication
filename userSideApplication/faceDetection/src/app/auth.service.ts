@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { first, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,13 +16,12 @@ export class AuthService {
     private router: Router
   ) {
     this.user = afAuth.authState;
-
     this.user.subscribe(
       (user) => {
         if (user) {
           this.userDetails = user;
           console.log(this.userDetails);
-          this.router.navigate(['/main']) // write a if condition of doing this only if the page is login/register
+          //this.router.navigate(['/main']) // write a if condition of doing this only if the page is login/register
         }
         else {
           this.userDetails = null;
@@ -98,27 +98,33 @@ export class AuthService {
     })
   }
 
-  doLogout() {
-    return new Promise((resolve, reject) => {
-      if (firebase.auth().currentUser) {
-        this.afAuth.auth.signOut();
-        this.pendingNavigation = "/login" //redirect to login 
-        resolve();
+  // doLogout() {
+  //   return new Promise((resolve, reject) => {
+  //     if (firebase.auth().currentUser) {
+  //       this.afAuth.auth.signOut();
+  //       this.pendingNavigation = "/login" //redirect to login 
+  //       resolve();
 
-      }
-      else {
-        reject();
-      }
-    });
+  //     }
+  //     else {
+  //       reject();
+  //     }
+  //   });
+  // }
+
+  checkIfLoggedIn() {
+    return this.afAuth.authState.pipe(first()).toPromise();
   }
 
-
-  isLoggedIn() {
-    if (this.userDetails == null) {
-      return false;
-    } else {
+  //https://fireship.io/snippets/check-if-current-user-exists-with-angularfire/
+  async isLoggedIn() {
+    const user = await this.checkIfLoggedIn();
+    if (user) {
       return true;
     }
+    return false;
+
+
   }
 
 

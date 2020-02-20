@@ -19,9 +19,17 @@ export class LoginComponent {
     public authService: AuthService,
     private router: Router) {
 
+    this.redirectIfLogin();
+
   }
 
+  async redirectIfLogin() {
+    const user = await this.authService.checkIfLoggedIn();
+    if (user) { // if user details exist then go to main... 
+      this.router.navigate(['/main']);
+    }
 
+  }
 
   doEmailPasswordLogin() {
     this.authService.doLogin(this.loginForm).then(data => {
@@ -47,6 +55,7 @@ export class LoginComponent {
   tryGoogleLogin() {
     this.authService.doGoogleLogin()
       .then(res => {
+        this.router.navigate(['/main']);
         console.log("user Login successFull")
       })
   }

@@ -11,19 +11,17 @@ export class AuthGuardService {
     private authService: AuthService,
     private toastcntrl: ToastController) { }
 
-  canActivate() {
-    if (this.authService.isLoggedIn()) {
+  async canActivate() {
+    const user = await this.authService.checkIfLoggedIn();
+    if (user) {
       return true;
     }
     this.router.navigate(['/login']);
-    async () => {
-      const toast = await this.toastcntrl.create({
-        message: "UnAuthorized!! please login First!!!",
-        duration: 3000
-      });
-      toast.present();
-
-    }
+    const toast = await this.toastcntrl.create({
+      message: "UnAuthorized!! please login First!!!",
+      duration: 3000
+    });
+    toast.present();
     return false;
   }
 

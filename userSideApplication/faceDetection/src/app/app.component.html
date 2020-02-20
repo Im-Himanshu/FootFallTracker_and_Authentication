@@ -1,5 +1,8 @@
-<ion-app
-  style="max-width:800px;width:100vw;margin: 0 auto;border-style: groove;border-width: 1px;"
->
-  <ion-router-outlet></ion-router-outlet>
+<ion-app style="max-width:800px;width:100vw;margin: 0 auto;border-style: groove;border-width: 1px;">
+  <ion-router-outlet *ngIf="isappReady"> </ion-router-outlet>
+  <div *ngIf="!isappReady">
+
+    <ion-spinner name="bubbles"></ion-spinner>
+    <p>Loading...</p>
+  </div>
 </ion-app>
