@@ -6,14 +6,14 @@ import {
   AfterViewInit,
   Inject
 } from "@angular/core";
-import { RegisteredUserService } from "../registered-user.service";
+import { RegisteredUserService } from "../../services/registered-user.service";
 declare var faceapi: any;
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
-import { ApisService } from "../services/apis.service"
+import { ApisService } from "../../services/apis.service"
 
 @Component({
   selector: "app-register-faces",
@@ -242,11 +242,7 @@ export class RegisterFacesComponent implements OnInit {
   }
 
   saveData(name) {
-    this.appService.addLabeledData(name, this.allDetection);
-    this.captures = [];
-    this.allDetection = [];
-    this.isImageCapturingCompleted = false;
-    this.appService.presentToast("Successfully Added!!!");
+
   }
 }
 

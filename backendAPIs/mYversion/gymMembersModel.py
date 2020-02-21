@@ -1,5 +1,5 @@
 from config import db, ma
-from sqlalchemy import Column, String, ForeignKey, JSON
+from sqlalchemy import Column, String, ForeignKey, JSON, INTEGER
 
 # CREATE TABLE GYM_MEMBERS
 # (
@@ -15,7 +15,10 @@ from sqlalchemy import Column, String, ForeignKey, JSON
 # this create the table if not exist via the command create_all()
 class GymMember(db.Model):
     __tablename__ = "GYM_MEMBERS"  # name of the table in sql
-    MEMBER_ID = Column(String(50), primary_key=True)
+    MEMBER_ID = Column(INTEGER,
+                       primary_key=True,
+                       nullable=False,
+                       autoincrement=True)  ## will get feeded accordingly
     MEMBER_NAME = Column(String(200))
     GYM_ID = Column(String(50),
                     ForeignKey("GYMS.GYM_ID"),
@@ -25,8 +28,8 @@ class GymMember(db.Model):
 
     # how to work with it ? -- https://medium.com/aubergine-solutions/working-with-mysql-json-data-type-with-prepared-statements-using-it-in-go-and-resolving-the-15ef14974c48
 
-    def __init__(self, MEMBER_ID, MEMBER_NAME, GYM_ID, ENCODINGS):
-        self.MEMBER_ID = MEMBER_ID
+    def __init__(self, MEMBER_NAME, GYM_ID, ENCODINGS):
+        #self.MEMBER_ID = MEMBER_ID
         self.MEMBER_NAME = MEMBER_NAME
         self.GYM_ID = GYM_ID
         self.ENCODINGS = ENCODINGS

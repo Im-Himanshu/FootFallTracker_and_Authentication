@@ -7,21 +7,22 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ApisService {
   baseUrl = "http://localhost:5000/"
 
-  getAllgyms_subUrl = "getAllGyms"
-  getGymDetails_suburl = "getGymDetails/"; // requires <gym_id>
-  addNewGym_subUrl = "addNewGym"
-  updateGym_subUrl = "updateGym/"; // requires <gym_id>;
+  private getAllgyms_subUrl = "getAllGyms"
+  private getGymDetails_suburl = "getGymDetails/"; // requires <gym_id>
+  private addNewGym_subUrl = "addNewGym"
+  private updateGym_subUrl = "updateGym/"; // requires <gym_id>;
   // create one more url which will fire a given query provided from the UI directly
 
-  getAllGymMember_subUrl = "getAllGymMember";
-  getGymMemberDetails_subUrl = "getGymMemberDetails/";  // requires <gym_id>;
-  addNewGymMember_subUrl = "addNewGymMember" //addNewGymMember
-  updateGymMember_subUrl = "updateGymMember/"
+  private getAllGymMember_subUrl = "getAllGymMember";
+  private getGymMemberDetails_subUrl = "getGymMemberDetails/";  // requires <Member_id>;
+  private getGymMemberofOneGym_subUrl = "getGymMemberofOneGym/";  // requires <gym_id>;
+  private addNewGymMember_subUrl = "addNewGymMember" //addNewGymMember
+  private updateGymMember_subUrl = "updateGymMember/"
 
-  getAllfootFalls_subUrl = "getAllfootFalls";
-  getfootFallDetails_subUrl = "getfootFallDetails/"; // requires <footFall_id>;
-  addNewfootFall_subUrl = "addNewfootFall";
-  updatefootFall_subUrl = "updatefootFall/" //requires <footFall_id>;
+  private getAllfootFalls_subUrl = "getAllfootFalls";
+  private getfootFallDetails_subUrl = "getfootFallDetails/"; // requires <footFall_id>;
+  private addNewfootFall_subUrl = "addNewfootFall";
+  private updatefootFall_subUrl = "updatefootFall/" //requires <footFall_id>;
   constructor(private http: HttpClient) { }
 
 
@@ -32,10 +33,7 @@ export class ApisService {
     )
   }
   public getOneGym(gym_id) {
-    this.getRequest(this.getGymDetails_suburl + gym_id).subscribe(data => {
-      console.log(JSON.stringify(data));
-    }
-    )
+    return this.getRequest(this.getGymDetails_suburl + gym_id)
   }
   public addNewGym(formData: any) {
     this.postRequest(this.addNewGym_subUrl, formData).subscribe(data => {
@@ -85,7 +83,11 @@ export class ApisService {
     }
     )
   }
+  public getGymMemberofOneGym(gym_id) {
+    return this.getRequest(this.getGymMemberofOneGym_subUrl + gym_id);
+  }
   public addNewGymMember(formData: any) {
+    //formData = JSON.stringify(formData)
     this.postRequest(this.addNewGymMember_subUrl, formData).subscribe(data => {
       console.log(data);
     })
@@ -112,7 +114,7 @@ export class ApisService {
 
   postRequest(sub_url: string, formData: any) {
     let full_url: string = this.baseUrl + sub_url;
-    formData = JSON.stringify(formData);
+    //formData = JSON.stringify(formData);
     const headerDict = {
       'Content-Type': 'application/json'
     }
@@ -125,4 +127,31 @@ export class ApisService {
   }
 
 
+}
+
+export interface Gym {
+
+  GYM_ID: string
+  GYM_NAME: string
+  AUTH_METHOD: string;
+  PASSWD: string;
+
+}
+export interface GymMember {
+
+  MEMBER_ID: string
+  MEMBER_NAME: string;
+  GYM_ID: string
+  ENCODINGS: any
+
+}
+export interface FootFall {
+
+  FOOTFALL_ID: string
+  MEMBER_ID: number;
+  GYM_ID: string;
+  FOOTFALL_TIMESTAMP: String
+  ENTRY_EXIT: string;
+  X_COORD_FRAC: number;
+  Y_COORD_FRAC: number;
 }

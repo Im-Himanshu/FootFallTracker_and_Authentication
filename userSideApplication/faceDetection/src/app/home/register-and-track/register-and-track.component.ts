@@ -6,14 +6,14 @@ import {
   AfterViewInit,
   Inject
 } from "@angular/core";
-import { RegisteredUserService } from "../registered-user.service";
+import { RegisteredUserService } from "../../services/registered-user.service";
 declare var faceapi: any;
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
 } from "@angular/material/dialog";
-import { ApisService } from "../services/apis.service"
+import { ApisService } from "../../services/apis.service"
 @Component({
   selector: 'app-register-and-track',
   templateUrl: './register-and-track.component.html',
@@ -87,6 +87,9 @@ export class RegisterAndTrackComponent implements OnInit {
     }
 
   }
+  saveActivity() {
+    this.appService.saveUserActivity();
+  }
 
 
   closeCameraStream() {
@@ -133,7 +136,7 @@ export class RegisterAndTrackComponent implements OnInit {
         //if (canvas) canvas.remove();
         this.istrackingProcessRunning = true;
         if (!this.isCameraOpen) {
-          this.appService.presentToast("Camera Was closed during registration Process..");
+          this.appService.presentToast("Camera Was closed during Tracking Process");
           this.stopTracking();
         }
         canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height); // clear previous detections
@@ -302,7 +305,7 @@ export class RegisterAndTrackComponent implements OnInit {
   }
 
   saveData(name) {
-    this.appService.addLabeledData(name, this.allDetection);
+    this.appService.registerNewUser(name, this.allDetection);
     this.captures = [];
     this.allDetection = [];
     this.registrationProcesStatus = 0;

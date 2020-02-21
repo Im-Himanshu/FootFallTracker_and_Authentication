@@ -6,6 +6,7 @@ from flask_api import status
 from config import db
 import config
 import json
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String
 
 gymMember_apis = Blueprint(
     'gymMember_apis',
@@ -22,6 +23,14 @@ def get_gymMembers():
     return jsonify(result)
 
 
+@app.route("/getGymMemberofOneGym/<gym_id>", methods=["GET"])
+def get_gymMemberofoneGym(gym_id):
+    all_GymMember = GymMember.query.filter(
+        GymMember.GYM_ID == gym_id)  ##//workign
+    result = gymMembers_schema.dump(all_GymMember)
+    return jsonify(result)
+
+
 @app.route("/getGymMemberDetails/<id>", methods=["GET"])
 def get_gymMember(id):
     gymMember = GymMember.query.get(id)
@@ -31,14 +40,14 @@ def get_gymMember(id):
 
 @app.route("/addNewGymMember", methods=["POST"])
 def add_gymMember():
-    MEMBER_ID = request.json['MEMBER_ID']
+    #MEMBER_ID = request.json['MEMBER_ID'] // will auto-increment
     MEMBER_NAME = request.json['MEMBER_NAME']
     GYM_ID = request.json['GYM_ID']
     ENCODINGS = request.json['ENCODINGS']
     #ENCODINGS = json.dumps(ENCODINGS)
     # will convert json to string for persisting with None to null
     #GYM_ID, GYM_NAME, AUTH_METHOD, PASSWD
-    new_GymMember = GymMember(MEMBER_ID, MEMBER_NAME, GYM_ID, ENCODINGS)
+    new_GymMember = GymMember(MEMBER_NAME, GYM_ID, ENCODINGS)
     db.session.add(new_GymMember)
     db.session.commit()
     result = gymMember_schema.dump(new_GymMember)

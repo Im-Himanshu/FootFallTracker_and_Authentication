@@ -9,9 +9,9 @@ import {
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
 declare var faceapi: any;
-import { RegisteredUserService } from "./registered-user.service";
+import { RegisteredUserService } from "../services/registered-user.service";
 
-import { AuthService } from "../auth.service"
+import { AuthService } from "../services/auth.service"
 @Component({
   selector: "app-home",
   templateUrl: "home.page.html",

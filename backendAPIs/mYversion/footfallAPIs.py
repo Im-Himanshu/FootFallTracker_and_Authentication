@@ -29,7 +29,6 @@ def get_footFall(footFallID):
 
 @app.route("/addNewfootFall", methods=["POST"])
 def add_footFall():
-    FOOTFALL_ID = request.json['FOOTFALL_ID']
     MEMBER_ID = request.json['MEMBER_ID']
     GYM_ID = request.json['GYM_ID']
     FOOTFALL_TIMESTAMP = request.json['FOOTFALL_TIMESTAMP']
@@ -37,8 +36,8 @@ def add_footFall():
     X_COORD_FRAC = request.json['X_COORD_FRAC']
     Y_COORD_FRAC = request.json['Y_COORD_FRAC']
     #GYM_ID, GYM_NAME, AUTH_METHOD, PASSWD
-    new_FootFall = FootFall(FOOTFALL_ID, MEMBER_ID, GYM_ID, FOOTFALL_TIMESTAMP,
-                            ENTRY_EXIT, X_COORD_FRAC, Y_COORD_FRAC)
+    new_FootFall = FootFall(MEMBER_ID, GYM_ID, FOOTFALL_TIMESTAMP, ENTRY_EXIT,
+                            X_COORD_FRAC, Y_COORD_FRAC)
     db.session.add(new_FootFall)
     db.session.commit()
     result = footFall_schema.dump(new_FootFall)
@@ -47,7 +46,6 @@ def add_footFall():
 
 @app.route("/updatefootFall/<footFallID>", methods=["Post"])
 def update_footFall(footFallID):
-    FOOTFALL_ID = request.json['FOOTFALL_ID']
     MEMBER_ID = request.json['MEMBER_ID']
     GYM_ID = request.json['GYM_ID']
     FOOTFALL_TIMESTAMP = request.json['FOOTFALL_TIMESTAMP']
@@ -55,7 +53,6 @@ def update_footFall(footFallID):
     X_COORD_FRAC = request.json['X_COORD_FRAC']
     Y_COORD_FRAC = request.json['Y_COORD_FRAC']
     footFall = FootFall.query.get(footFallID)
-    footFall.FOOTFALL_ID = FOOTFALL_ID
     footFall.MEMBER_ID = MEMBER_ID
     footFall.GYM_ID = GYM_ID
     footFall.FOOTFALL_TIMESTAMP = FOOTFALL_TIMESTAMP

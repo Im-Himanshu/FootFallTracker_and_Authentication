@@ -24,13 +24,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from "./login/login.component"
 import { RegisterComponent } from "./register/register.component"
 
-import { AuthService } from "./auth.service"
-import { AuthGuardService } from "./auth-guard.service"
+import { AuthService } from "./services/auth.service"
+import { AuthGuardService } from "./services/auth-guard.service"
+import { RegisteredUserService } from "./services/registered-user.service"
 
 import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { AngularFireAuthModule } from "@angular/fire/auth";
+import { HttpClientModule } from '@angular/common/http';
 
 var firebaseConfig = {
   apiKey: "AIzaSyCoSbA7gr4PCa4FOZdXLWwHzwabL3HMe2w",
@@ -52,6 +54,7 @@ var firebaseConfig = {
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule, // firestore
     AngularFireAuthModule, // auth
@@ -68,7 +71,9 @@ var firebaseConfig = {
     StreamingMedia,
     PhotoViewer,
     AuthService,
-    AuthGuardService
+    AuthGuardService,
+    RegisteredUserService
+
 
   ],
   bootstrap: [AppComponent]

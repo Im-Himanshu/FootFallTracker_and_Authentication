@@ -8,7 +8,7 @@ import {
 } from "@angular/core";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
-import { RegisteredUserService } from "../registered-user.service";
+import { RegisteredUserService } from "../../services/registered-user.service";
 declare var faceapi: any;
 
 @Component({

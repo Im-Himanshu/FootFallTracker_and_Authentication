@@ -11,11 +11,9 @@ import { CameraPreview } from "@ionic-native/camera-preview/ngx";
 import { Diagnostic } from "@ionic-native/diagnostic/ngx";
 import { RegisterFacesComponent } from "./register-faces/register-faces.component";
 import { TrackActivitiesComponent } from "./track-activities/track-activities.component";
-import { RegisteredUserService } from "./registered-user.service";
 import { DialogOverviewExampleDialog } from "./register-and-track/register-and-track.component";
 import { MatButtonModule } from "@angular/material/button";
-import { HttpClientModule } from '@angular/common/http';
-import { ApisService } from "./services/apis.service"
+import { ApisService } from "../services/apis.service"
 import { RegisterAndTrackComponent } from "./register-and-track/register-and-track.component"
 @NgModule({
   imports: [
@@ -24,7 +22,6 @@ import { RegisterAndTrackComponent } from "./register-and-track/register-and-tra
     IonicModule,
     MatDialogModule,
     MatButtonModule,
-    HttpClientModule,
     RouterModule.forChild([
       {
         path: "",
@@ -68,7 +65,7 @@ import { RegisterAndTrackComponent } from "./register-and-track/register-and-tra
     RegisterAndTrackComponent,
     DialogOverviewExampleDialog
   ],
-  providers: [CameraPreview, Diagnostic, RegisteredUserService, ApisService],
+  providers: [CameraPreview, Diagnostic, ApisService],
   entryComponents: [DialogOverviewExampleDialog]
 })
 export class HomePageModule { }

@@ -5,7 +5,7 @@ import { VideoCapturePlus } from "@ionic-native/video-capture-plus/ngx";
 import { SimonVideoStreamWithStorageComponent } from "./simon-video-stream-with-storage/simon-video-stream-with-storage.component";
 import { LoginComponent } from "./login/login.component"
 import { RegisterComponent } from "./register/register.component"
-import { AuthGuardService } from "./auth-guard.service"
+import { AuthGuardService } from "./services/auth-guard.service"
 
 
 const routes: Routes = [

@@ -1,5 +1,5 @@
 from config import db, ma
-from sqlalchemy import Column, String, ForeignKey, Float, TIMESTAMP, UniqueConstraint
+from sqlalchemy import Column, String, ForeignKey, Float, TIMESTAMP, UniqueConstraint, INTEGER
 import json
 
 # this is just the mimic of all the database table no change here
@@ -18,8 +18,11 @@ import json
 # this create the table if not exist via the command create_all()
 class FootFall(db.Model):
     __tablename__ = "FOOTFALL"  # name of the table in sql
-    FOOTFALL_ID = Column(String(50), primary_key=True)
-    MEMBER_ID = Column(String(50),
+    FOOTFALL_ID = Column(INTEGER,
+                         primary_key=True,
+                         nullable=False,
+                         autoincrement=True)
+    MEMBER_ID = Column(INTEGER,
                        ForeignKey("GYM_MEMBERS.MEMBER_ID"),
                        nullable=False)
     GYM_ID = Column(String(50), ForeignKey("GYMS.GYM_ID"), nullable=False)
@@ -32,9 +35,8 @@ class FootFall(db.Model):
                      'FOOTFALL_TIMESTAMP',
                      name='uniqueUserActivityConstrain')
 
-    def __init__(self, FOOTFALL_ID, MEMBER_ID, GYM_ID, FOOTFALL_TIMESTAMP,
-                 ENTRY_EXIT, X_COORD_FRAC, Y_COORD_FRAC):
-        self.FOOTFALL_ID = FOOTFALL_ID
+    def __init__(self, MEMBER_ID, GYM_ID, FOOTFALL_TIMESTAMP, ENTRY_EXIT,
+                 X_COORD_FRAC, Y_COORD_FRAC):
         self.MEMBER_ID = MEMBER_ID
         self.GYM_ID = GYM_ID
         self.FOOTFALL_TIMESTAMP = FOOTFALL_TIMESTAMP
