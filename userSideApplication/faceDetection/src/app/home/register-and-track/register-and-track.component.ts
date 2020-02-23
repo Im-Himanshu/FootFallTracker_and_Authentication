@@ -88,7 +88,7 @@ export class RegisterAndTrackComponent implements OnInit {
 
   }
   saveActivity() {
-    this.appService.saveUserActivity();
+    //this.appService.saveUserActivity();
   }
 
 
@@ -149,12 +149,15 @@ export class RegisterAndTrackComponent implements OnInit {
           displaySize
         );
         let results = [];
+        let crntFrameDetection = {};
         for (let d of resizedDetections) {
           await this.appService.findMatcher(d.descriptor).then(data => {
             results.push(data);
+            crntFrameDetection[data._label] = d.alignedRect; // the user is in the frame
           });
         }
-
+        this.appService.monitorUserActivity(crntFrameDetection);
+        // this.sendActivityInfoToDataBase(['user1', 'user2']);
         results.forEach((result, i) => {
           const box = resizedDetections[i].detection.box;
           const drawBox = new faceapi.draw.DrawBox(box, {
@@ -201,8 +204,8 @@ export class RegisterAndTrackComponent implements OnInit {
       this.registrationProcess = setInterval(async () => {
         if (!this.isCameraOpen) {
           this.appService.presentToast("Camera Was closed during registration Process..");
-          this.registrationProcesStatus = 0;
-          this.afterRegistrationEnd();
+          //this.registrationProcesStatus = 0;
+          this.afterRegistrationEnd(0);
           return;
         }
         const detections = await faceapi
@@ -230,19 +233,17 @@ export class RegisterAndTrackComponent implements OnInit {
           this.captures.push(canvasForImage.toDataURL("image/png"));
         }
         if (this.allDetection.length >= 6) {
-          this.afterRegistrationEnd();
-          this.registrationProcesStatus = 2;
+          this.afterRegistrationEnd(2);
           this.appService.presentToast("Captured Images");
-          this.submitDetails();
         }
       }, 1000);
     });
   }
 
 
-  afterRegistrationEnd() {
+  afterRegistrationEnd(processStatus) {
     clearInterval(this.registrationProcess);
-    this.registrationProcesStatus = 0;
+    this.registrationProcesStatus = processStatus;
     this.registrationProcess = null;
     let canvas = this.canvasnativeElement; // clear the canvas after the draw
     canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
@@ -251,18 +252,18 @@ export class RegisterAndTrackComponent implements OnInit {
   }
   toggleProcess() {
     if (this.registrationProcess) {
-      this.afterRegistrationEnd();
+      this.afterRegistrationEnd(0);
     }
     else {
       this.registerUserFromVideo();
     }
   }
 
-  reDoCapturing() {
-    this.afterRegistrationEnd();
+  cancelRegistration() {
+    this.afterRegistrationEnd(0);
     this.allDetection = [];
     this.captures = [];
-    this.registerUserFromVideo();
+    //this.registerUserFromVideo();
   }
   performSanityCheck(resizedDetections: any) {
     if (resizedDetections.length > 1) {

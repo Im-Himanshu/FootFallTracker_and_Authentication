@@ -30,4 +30,7 @@ export class HomePage {
   logOut() {
     this.authService.logout();
   }
+  presentHowToUseModal() {
+
+  }
 }

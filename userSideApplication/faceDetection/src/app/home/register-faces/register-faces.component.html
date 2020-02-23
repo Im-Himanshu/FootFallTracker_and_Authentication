@@ -22,7 +22,7 @@
     <canvas #canvas2 id="canvas2"></canvas>
     <ul>
       <li *ngFor="let c of captures; let i = index">
-        <img (click)="onImageClick(c)" src="{{ c }}" height="80" />
+        <img src="{{ c }}" height="80" />
         <ion-badge (click)="removeImage(i)">
           <ion-icon name="close-circle-outline"></ion-icon>
         </ion-badge>

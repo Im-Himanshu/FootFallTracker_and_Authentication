@@ -29,7 +29,7 @@ import { RegisterAndTrackComponent } from "./register-and-track/register-and-tra
         children: [
           {
             path: "",
-            redirectTo: "register",
+            redirectTo: "registerTrack",
             pathMatch: "full"
           },
           {

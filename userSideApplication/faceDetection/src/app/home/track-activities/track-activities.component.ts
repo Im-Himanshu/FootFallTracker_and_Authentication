@@ -146,19 +146,6 @@ export class TrackActivitiesComponent implements OnInit, OnDestroy {
           const drawBox = new faceapi.draw.DrawBox(box, {
             label: result.toString()
           });
-          // isFaceAlreadyPresentInPersistedFrames: boolean = false
-          // for (let faces_detected_in_persisted_frame of this.currentPersistedFrames) {
-          // for (let face in faces_detected_in_persisted_frame) {
-          //   if(face.label == result.label) {
-          // 	isFaceAlreadyPresentInPersistedFrames = true
-          // 	break
-          //   }
-          // }
-          // if(isFaceAlreadyPresentInPersistedFrames) break
-          // }
-          // if(isFaceAlreadyPresentInPersistedFrames == false) {
-          // // Send backend call to log new footfall
-          // }
           console.log("existing user detected :" + result.toString());
           drawBox.draw(canvas);
         });

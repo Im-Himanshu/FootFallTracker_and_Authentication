@@ -13,16 +13,20 @@
   <div *ngIf="!istrackingProcessRunning">
     <p>{{ liveMessages }}</p>
     <ion-button [disabled]="!isCameraOpen" *ngIf="registrationProcesStatus == 0" (click)="registerUserFromVideo()">
-      Register New User </ion-button>
-    <ion-button *ngIf="registrationProcesStatus === 1" (click)="submitDetails2()">
-      Toggle Process
+      Register User </ion-button>
+    <ion-button *ngIf="registrationProcesStatus === 1 || registrationProcesStatus === 2" (click)="cancelRegistration()">
+      Cancel Process
     </ion-button>
-    <ion-button *ngIf="registrationProcesStatus === 2" (click)="submitDetails()">Submit
+    <ion-button [disabled]="!isCameraOpen" *ngIf="(registrationProcesStatus === 2 && this.allDetection.length < 6 )"
+      (click)="registerUserFromVideo()">
+      Add More Photos</ion-button>
+    <ion-button *ngIf="registrationProcesStatus === 2 && this.allDetection.length >= 6 " (click)="submitDetails()">
+      Submit
       Data</ion-button>
     <div>
       <ul>
         <li *ngFor="let c of captures; let i = index">
-          <img (click)="onImageClick(c)" src="{{ c }}" height="80" />
+          <img src="{{ c }}" height="80" />
           <ion-badge (click)="removeImage(i)">
             <ion-icon name="close-circle-outline"></ion-icon>
           </ion-badge>

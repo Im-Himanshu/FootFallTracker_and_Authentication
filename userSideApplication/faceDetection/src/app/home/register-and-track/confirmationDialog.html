@@ -2,8 +2,8 @@
 <div mat-dialog-content>
   <p>Name of the Person?</p>
   <ul>
-    <li *ngFor="let c of captures; let i = index">
-      <img (click)="onImageClick(c)" src="{{ c }}" height="20" />
+    <li *ngFor="let c of data; let i = index">
+      <img src="{{ c }}" height="20" />
     </li>
   </ul>
   <input [(ngModel)]="data.category" />

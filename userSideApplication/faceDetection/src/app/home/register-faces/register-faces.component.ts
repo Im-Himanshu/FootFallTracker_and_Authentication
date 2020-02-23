@@ -7,6 +7,7 @@ import {
   Inject
 } from "@angular/core";
 import { RegisteredUserService } from "../../services/registered-user.service";
+import { DialogOverviewExampleDialog } from "../register-and-track/register-and-track.component"
 declare var faceapi: any;
 import {
   MatDialog,
@@ -246,17 +247,3 @@ export class RegisterFacesComponent implements OnInit {
   }
 }
 
-@Component({
-  selector: "confirmationDialog",
-  templateUrl: "confirmationDialog.html"
-})
-export class DialogOverviewExampleDialog {
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}

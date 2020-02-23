@@ -20,7 +20,10 @@ export class RegisteredUserService {
   index = 1;
   exsistingLabel = {};
   gymDetails: Gym;
+  bufferFrame = 30;
 
+  crntMonitoredGymersList: any = {}; // start with a empty list;
+  crntMonitoredGymerLastPosition: any = {}
   constructor(
     public loadingController: LoadingController,
     private toastController: ToastController,
@@ -57,6 +60,8 @@ export class RegisteredUserService {
     }
   }
 
+
+  // main process called when tracker detect a face....
   async findMatcher(description) {
     // if does not exsist start with unknown
     if (!this.faceMatcher) {
@@ -64,21 +69,59 @@ export class RegisteredUserService {
       await this.addNonIdentifiedUser("unknown-" + this.index, descriptions); // if it is the first one add it as a entry
       this.index = this.index + 1;
     }
-
     let matcher = this.faceMatcher.findBestMatch(description); // everytime a new label is added this is retrained so no need to retrain this one
     this.addIfNotMatching(matcher, description);
     return matcher;
   }
 
 
-  async saveUserActivity() {
+  async monitorUserActivity(crntFrameUserPosition) {
+    // crntFrameUser and json of user detected in current frame {}
+    let keys = Object.keys(this.crntMonitoredGymersList);
+    for (let key of keys) {
+      if (crntFrameUserPosition[key]) {
+        this.crntMonitoredGymersList[key] = this.bufferFrame
+        this.crntMonitoredGymerLastPosition[key] = crntFrameUserPosition[key];
+        delete crntFrameUserPosition[key]; // delete them
+      }
+      else {
+        this.crntMonitoredGymersList[key] = this.crntMonitoredGymersList[key] - 1
+      }
+      if (this.crntMonitoredGymersList[key] <= 0) {
+        await this.saveUserActivity(key, 'EXIT');
+        delete this.crntMonitoredGymersList[key];
+        delete this.crntMonitoredGymerLastPosition[key];
+        // trigger the delete event...the user has left...
+      }
+    }
+    let keys2 = Object.keys(crntFrameUserPosition);
+    for (let key of keys2) {
+      this.crntMonitoredGymersList[key] = this.bufferFrame;// start the trigger for the new user
+      this.crntMonitoredGymerLastPosition[key] = crntFrameUserPosition[key]; // it has the data of where in the frame it was detected
+      this.saveUserActivity(key, 'ENTRY');
+      // trigger the addition event
+    }
+
+
+  }
+
+
+  async saveUserActivity(label, type) {
+    if (!this.exsistingLabel[label]) {
+      console.log("user not availaible in DataBase")
+      return;
+    }
+    let alignedRect = this.crntMonitoredGymerLastPosition[label];
+    let totalVideoSize = alignedRect._imageDims; // _width, _height
+    let userPosition = alignedRect._box // _x , _y important for current 
+    let memberId = this.exsistingLabel[label][0];
     let footFall = {} as FootFall;
     footFall.GYM_ID = this.gymDetails.GYM_ID;
-    footFall.MEMBER_ID = 3;
+    footFall.MEMBER_ID = memberId;
     footFall.FOOTFALL_TIMESTAMP = new Date().toISOString().slice(0, 19).replace('T', ' '); // will give the current date and time
-    footFall.ENTRY_EXIT = "entry"; // has to be < 5 letter
-    footFall.X_COORD_FRAC = .3;
-    footFall.Y_COORD_FRAC = .3;
+    footFall.ENTRY_EXIT = type; // has to be < 5 letter
+    footFall.X_COORD_FRAC = userPosition._x / totalVideoSize._width;
+    footFall.Y_COORD_FRAC = userPosition._y / totalVideoSize._height;
     this.apiService.addNewfootFall(footFall);
   }
 
