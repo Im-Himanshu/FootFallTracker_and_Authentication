@@ -1,29 +1,41 @@
 # Disclaimer
-I do not claim any of my public repository work to be completely mine though I try to give full credit to repository I am picking from.
-It is generally a mix of  implementation from multiple repository, learning and building on and above them to my use-cases.
-In this project I have build up a production grade surveillance system, the mix of tech-stack used in this project is what I think is the best way of buidling a production grade face-recognition based system.
-This has been a part of system tested on site in gyms for authentication but there are many improvement in the way things are done could be improved.
+I do not claim most of my public repository work to be completely mine though I try to give full credit to repository I am building upon.
 
 
-# FootFallTrackerboT_POC
+# FootFallTracker_and_Authentication
+
+## **Introduction**
+This project is about building a video based authentication system that does all the ML computation on user machine and require little to no computation on server side. Moreover, the application should be able to run in any user machine avaialible i.e. (ios, android, windows etc). How do we solve this problem? we utilize a mix of technology that enables this architecture.
+1. We convert and optimize our two  model **MTCNN + Facenet using tensorflow.js** to be able to load in any web browser.
+2. We build a progressive web app (PWA) in Angular + ionic + cordova that can be build in apk, web, ios bundle directly for building native app 
+3. We build an embedding database in Firebase that saved registered user and authenticate register person.
+4. A proprietary algorithm that tracks user in-house time to track resource usage.
+
+## **Application Architecture**
+
+![](docs/FootFall_tracking_architect.png)
+Architecture diagram of the whole application with three main parts.
+1. User side application, basically a PWA which is able to run tensorflow.js optimized model in any device.
+   1. Camera input is streamed to the model which then detects the person in it and output the face-embedding vectors.
+   2. This embedding is checked for similarity from authorized user and user is authenticated or non-authorized.
+   3. User-activity info is send to the database.
+2. Cloud database provide info of authorized user and save activity.
+3. Data analysis is done on the user-activity data to present meaningful report to user.
+
 Demo 
 
 ScreenShot of applications in work. 
 
-## features 
-1. Load anyWhere
-2. No extra cloud cost
-3. 
+## **features** 
+1. Multi-platform support i.e. Web, native-Android,ios etc
+2. ML Computation on user hardware with tensorflow.js 
+3. Real-time dashboard and Low-internet bandwidth requirement for video based authentication
 
 
-## About
 
-## **Application Architecture**
-content goes here
-tensorflow.js used for inferencing -- Angular UI -- Firebase backend -- tensorflow.js
-Load it in your mobile
-![](docs/FootFall_tracking_architect.png)
 
+
+# About
 ## **MTCNN+FaceNet model used** 
 We will use a combination of two model i.e. MTCNN + Face-net 
 
