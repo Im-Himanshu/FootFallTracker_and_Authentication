@@ -1,14 +1,9 @@
-# Disclaimer
-I do not claim most of my public repository work to be completely mine though I try to give full credit to repository I am building upon.
 
-
-# FootFallTracker_and_Authentication
-
-## **Introduction**
+## **Introduction** | [Live Demo](https://footfalltracker-cc13e.firebaseapp.com/main/registerTrack)
 This project is about building a video based authentication system that does all the ML computation on user machine and require little to no computation on server side. Moreover, the application should be able to run in any user machine avaialible i.e. (ios, android, windows etc). How do we solve this problem? we utilize a mix of technology that enables this architecture.
-1. We convert and optimize our two  model **MTCNN + Facenet using tensorflow.js** to be able to load in any web browser.
-2. We build a progressive web app (PWA) in Angular + ionic + cordova that can be build in apk, web, ios bundle directly for building native app 
-3. We build an embedding database in Firebase that saved registered user and authenticate register person.
+1. We convert and optimize our two  model **MTCNN + Facenet using Tensorflow.js** to be able to load in any web browser.
+2. We build a progressive web app **(PWA) in Angular + Ionic + Cordova** that can be build in apk, web, ios bundle directly for building native app 
+3. We build an embedding **database in Firebase** that saved registered user and authenticate register person.
 4. A proprietary algorithm that tracks user in-house time to track resource usage.
 
 ## **Application Architecture**
@@ -99,3 +94,8 @@ content goes here
 
 
 ## user-workflow
+
+
+### Disclaimer
+I do not claim most of my public repository work to be completely mine though I try to give full credit to repository I am building upon.
+
