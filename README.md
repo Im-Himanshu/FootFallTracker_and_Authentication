@@ -1,5 +1,7 @@
 ---
 ## **Introduction** | [Live Demo](https://im-himanshu.github.io/LiveFaceDetection-TensorFlowJs/)
+Please Note: Live Demo here is just the demonstration of ability to run ML model in browser, and it takes nearly 3-min to load the model for the first time.
+
 This project is about building a **video based authentication system** that does all the ML computation on user machine and require little to no computation on server side. Moreover, the application should be able to run in any user machine avaialible i.e. (ios, android, windows etc). How do we solve this problem? we utilize a mix of technology that enables this architecture.
 1. We convert and optimize our two  model **MTCNN + Facenet using Tensorflow.js** to be able to load in any web browser.
 2. We build a progressive web app **(PWA) in Angular + Ionic + Cordova** that can be build in apk, web, ios bundle directly for building native app 
@@ -8,7 +10,7 @@ This project is about building a **video based authentication system** that does
 <table>
 <tr>  
 <td>
-   <img src="https://github.com/Im-Himanshu/FootFallTracker_and_Authentication/assets/16800094/2a2bf6bd-0a0f-462f-af81-e7897766a710" alt="Image 7" width="400">
+   <img src="https://github.com/Im-Himanshu/FootFallTracker_and_Authentication/assets/16800094/2a2bf6bd-0a0f-462f-af81-e7897766a710" alt="Image 7" width="330">
    <figcaption> User-Authentication model-1</figcaption>
 </td>  
 <td>
