@@ -1,2 +1,5 @@
 userSideApplication/FaceDetector/package-lock.json
 userSideApplication/FaceDetector/package-lock.json
+.gitignore
+.idea
+.project
