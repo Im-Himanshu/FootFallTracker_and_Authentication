@@ -10,7 +10,6 @@ Demo
 
 ScreenShot of applications in work. 
 
-
 ## features 
 1. Load anyWhere
 2. No extra cloud cost
@@ -19,15 +18,16 @@ ScreenShot of applications in work.
 
 ## About
 
-## Application Architecture
+## **Application Architecture**
 content goes here
 tensorflow.js used for inferencing -- Angular UI -- Firebase backend -- tensorflow.js
 Load it in your mobile
+![](docs/FootFall_tracking_architect.png)
 
-## MTCNN+FaceNet model used 
+## **MTCNN+FaceNet model used** 
 We will use a combination of two model i.e. MTCNN + Face-net 
 
-### MTCNN For Face-Detection [[2016 by Zhang et al.](https://arxiv.org/abs/1604.02878)]
+### **MTCNN For Face-Detection** [[2016 by Zhang et al.](https://arxiv.org/abs/1604.02878)]
 MTCNN Model stand alone is capable of finding face in a picture, providing rectangular Object detection box as an output.
 <p float="left">
   <img src="docs/MTCNN.png" width="400" />
