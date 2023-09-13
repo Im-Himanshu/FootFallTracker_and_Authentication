@@ -1,7 +1,7 @@
 ---
 ## **Introduction** | [Live Demo](https://im-himanshu.github.io/LiveFaceDetection-TensorFlowJs/)
 Please Note: Live Demo here is just the demonstration of ability to run ML model in browser, and it takes nearly 3-min to load the model for the first time.
-[Authentication Demo](https://footfalltracker-cc13e.firebaseapp.com/main/registerTrack) (sign in using: himanshugoyal414@yahoo.com, testing1234 )
+[Authentication Demo](https://footfalltracker-cc13e.firebaseapp.com/main/registerTrack) (sign in using: himanshugoyal414@yahoo.com, testing1234> sign-in> toggle radio button> start-tracking> )
 
 This project is about building a **video based authentication system** that does all the ML computation on user machine and require little to no computation on server side. Moreover, the application should be able to run in any user machine avaialible i.e. (ios, android, windows etc). How do we solve this problem? we utilize a mix of technology that enables this architecture.
 1. We convert and optimize our two  model **MTCNN + Facenet using Tensorflow.js** to be able to load in any web browser.
