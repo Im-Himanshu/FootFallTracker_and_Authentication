@@ -1,7 +1,7 @@
 ---
 ## **Introduction** | [Live Demo](https://im-himanshu.github.io/LiveFaceDetection-TensorFlowJs/)
 Please Note: Live Demo here is just the demonstration of ability to run ML model in browser, and it takes nearly 3-min to load the model for the first time.
-[Authentication Demo](https://footfalltracker-cc13e.firebaseapp.com/main/registerTrack) (sign in using: himanshugoyal414@yahoo.com, testing1234  sign-in ~ Toggle Radio button in top left ~ start-tracking in bottom left )
+[Authentication Demo](https://footfalltracker-cc13e.firebaseapp.com/main/registerTrack) {sign in using: himanshugoyal414@yahoo.com, testing1234 ~ sign-in ~ Toggle Radio button in top left ~ start-tracking in bottom left}
 
 This project is about building a **video based authentication system** that does all the ML computation on user machine and require little to no computation on server side. Moreover, the application should be able to run in any user machine avaialible i.e. (ios, android, windows etc). How do we solve this problem? we utilize a mix of technology that enables this architecture.
 1. We convert and optimize our two  model **MTCNN + Facenet using Tensorflow.js** to be able to load in any web browser.
@@ -16,11 +16,11 @@ This project is about building a **video based authentication system** that does
 </td>  
 <td>
    <img src="https://github.com/Im-Himanshu/FootFallTracker_and_Authentication/assets/16800094/29deac7d-16ae-47c6-a540-7c09cb7af954" alt="Image 5" width="400">
-   <figcaption>Model-2: User-emotion-surprised</figcaption>
+   <figcaption>Model-2, User-emotion-surprised</figcaption>
 </td>  
 <td>
    <img src="https://github.com/Im-Himanshu/FootFallTracker_and_Authentication/assets/16800094/4f27d0b6-93cd-4537-ac4d-fc8238bd903e" alt="Image 6" width="400">
-   <figcaption>Model-2: User-emotion-happy</figcaption>
+   <figcaption>Model-2, User-emotion-happy</figcaption>
 </td>  
 </tr>
 </table>
